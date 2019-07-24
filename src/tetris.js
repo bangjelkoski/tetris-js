@@ -42,7 +42,7 @@ export class Tetris {
         const { width: gridWidth } = this.getGrid().getDimensions();
         const positionRow = row || gridWidth / 2 - 2;
 
-        return new Tetromino(positionRow, col);
+        return new Tetromino({ row: positionRow, col });
     }
 
     getNextTetromino() {

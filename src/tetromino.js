@@ -2,8 +2,8 @@ import { tetrominos } from './tetrominos.js';
 import { removeBackgroundColor, applyBackgroundColor } from './helpers.js';
 
 export class Tetromino {
-    constructor(x, y) {
-        this.setPosition(x, y)
+    constructor(position) {
+        this.setPosition(position)
             .setShape(Math.floor(Math.random() * tetrominos.length))
             .setCurrentShapeIndex(Math.floor(Math.random() * this.getShape().length))
             .setCurrentShape();
@@ -11,11 +11,12 @@ export class Tetromino {
 
     iterateCurrentShape(callback) {
         const currentShape = this.getCurrentShape();
+        const { row, col } = this.getPosition();
 
         for (let i = 0; i < currentShape.length; i++) {
             for (let j = 0; j < currentShape[i].length; j++) {
                 if (currentShape[i][j]) {
-                    callback(this.position.row + i, this.position.col + j);
+                    callback(row + i, col + j);
                 }
             }
         }
@@ -43,7 +44,7 @@ export class Tetromino {
         return this;
     }
 
-    setPosition(row, col = 0) {
+    setPosition({ row, col }) {
         this.position = {
             row,
             col,
@@ -76,9 +77,9 @@ export class Tetromino {
         return this;
     }
 
-    move(row = this.position.row, col = this.position.col) {
+    move(position) {
         this.clear()
-            .setPosition(row, col)
+            .setPosition(position)
             .draw();
     }
 
