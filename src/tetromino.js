@@ -15,7 +15,7 @@ export class Tetromino {
         for (let i = 0; i < currentShape.length; i++) {
             for (let j = 0; j < currentShape[i].length; j++) {
                 if (currentShape[i][j]) {
-                    callback(this.position.x + i, this.position.y + j);
+                    callback(this.position.row + i, this.position.col + j);
                 }
             }
         }
@@ -43,10 +43,10 @@ export class Tetromino {
         return this;
     }
 
-    setPosition(x, y = 0) {
+    setPosition(row, col = 0) {
         this.position = {
-            x,
-            y,
+            row,
+            col,
         };
 
         return this;
@@ -76,9 +76,9 @@ export class Tetromino {
         return this;
     }
 
-    move(x = this.position.x, y = this.position.y) {
+    move(row = this.position.row, col = this.position.col) {
         this.clear()
-            .setPosition(x, y)
+            .setPosition(row, col)
             .draw();
     }
 

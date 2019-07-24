@@ -38,11 +38,11 @@ export class Tetris {
         return this.points;
     }
 
-    getNewTetromino(x, y = 0) {
+    getNewTetromino(row, col = 0) {
         const { width: gridWidth } = this.getGrid().getDimensions();
-        const positionX = x || gridWidth / 2 - 2;
+        const positionRow = row || gridWidth / 2 - 2;
 
-        return new Tetromino(positionX, y);
+        return new Tetromino(positionRow, col);
     }
 
     getNextTetromino() {
@@ -79,6 +79,7 @@ export class Tetris {
 
     start() {
         this.setCurrentTetromino().setNextTetromino();
+        this.getCurrentTetromino().draw();
     }
 
     progress() {
@@ -95,18 +96,18 @@ export class Tetris {
 
     moveTetromino(position) {
         const tetromino = this.getCurrentTetromino();
-        const { x, y } = tetromino.getPosition();
+        const { row, col } = tetromino.getPosition();
         let potentialPosition;
 
         switch (position) {
             case DOWN:
-                potentialPosition = { x, y: y + 1 };
+                potentialPosition = { row, col: col + 1 };
                 break;
             case RIGHT:
-                potentialPosition = { x: x + 1, y };
+                potentialPosition = { row: row + 1, col };
                 break;
             case LEFT:
-                potentialPosition = { x: x - 1, y };
+                potentialPosition = { row: row - 1, col };
                 break;
         }
 
@@ -115,12 +116,18 @@ export class Tetris {
         }
     }
 
-    canTetrominoBeMoved({ x: potentialX, y: potentialY }) {
+    canTetrominoBeMoved({ row: potentialRow, col: potentialCol }) {
         const grid = this.getGrid();
         const tetromino = this.getCurrentTetromino();
         const tetrominoCurrentShape = tetromino.getCurrentShape();
-        const { x, y } = tetromino.getPosition();
 
+        // Left wall
+
+        // Right wall
+
+        // Landed
+
+        // End of grid
         return true;
     }
 
