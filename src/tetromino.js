@@ -1,5 +1,5 @@
 import { tetrominos } from './tetrominos.js';
-import { removeBackgroundColor, applyBackgroundColor } from './helpers.js';
+import { removeBackgroundColor, applyBackgroundColor, iterateCurrentShape } from './helpers.js';
 
 export class Tetromino {
     constructor(position) {
@@ -9,21 +9,12 @@ export class Tetromino {
             .setCurrentShape();
     }
 
-    iterateCurrentShape(callback) {
-        const currentShape = this.getCurrentShape();
-        const { row, col } = this.getPosition();
-
-        for (let i = 0; i < currentShape.length; i++) {
-            for (let j = 0; j < currentShape[i].length; j++) {
-                if (currentShape[i][j]) {
-                    callback(row + i, col + j);
-                }
-            }
-        }
-    }
-
     getPosition() {
         return this.position;
+    }
+
+    getPotentialPosition() {
+        return this.potentialPosition;
     }
 
     getCurrentShape() {
@@ -53,6 +44,15 @@ export class Tetromino {
         return this;
     }
 
+    setPotentialPosition({ row, col }) {
+        this.potentialPosition = {
+            row,
+            col,
+        };
+
+        return this;
+    }
+
     setCurrentShapeIndex(index) {
         this.currentShapeIndex = index;
 
@@ -66,13 +66,13 @@ export class Tetromino {
     }
 
     draw() {
-        this.iterateCurrentShape(applyBackgroundColor);
+        iterateCurrentShape(this, applyBackgroundColor);
 
         return this;
     }
 
     clear() {
-        this.iterateCurrentShape(removeBackgroundColor);
+        iterateCurrentShape(this, removeBackgroundColor);
 
         return this;
     }

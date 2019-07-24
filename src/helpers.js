@@ -46,4 +46,17 @@ const drawGrid = ({ width, height }, element) => {
     }
 };
 
-export { drawGrid, removeBackgroundColor, getEmptySquare, applyBackgroundColor };
+const iterateCurrentShape = (tetromino, callback) => {
+    const currentShape = tetromino.getCurrentShape();
+    const { row, col } = tetromino.getPosition();
+
+    for (let i = 0; i < currentShape.length; i++) {
+        for (let j = 0; j < currentShape[i].length; j++) {
+            if (currentShape[i][j]) {
+                callback(row + i, col + j);
+            }
+        }
+    }
+};
+
+export { drawGrid, iterateCurrentShape, removeBackgroundColor, getEmptySquare, applyBackgroundColor };
