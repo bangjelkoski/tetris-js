@@ -13,10 +13,6 @@ export class Tetromino {
         return this.position;
     }
 
-    getPotentialPosition() {
-        return this.potentialPosition;
-    }
-
     getCurrentShape() {
         return this.currentShape;
     }
@@ -37,15 +33,6 @@ export class Tetromino {
 
     setPosition({ row, col }) {
         this.position = {
-            row,
-            col,
-        };
-
-        return this;
-    }
-
-    setPotentialPosition({ row, col }) {
-        this.potentialPosition = {
             row,
             col,
         };

@@ -124,80 +124,37 @@ export class Tetris {
     }
 
     canTetrominoBeMoved(potentialPosition, direction) {
-        const tetromino = this.getCurrentTetromino();
-        tetromino.setPotentialPosition(potentialPosition);
+        const currentShape = this.getCurrentTetromino().getCurrentShape();
+        const { width, height } = this.getGrid().getDimensions();
 
-        // Left wall
-        if (direction === LEFT && this.collisionOnLeft(tetromino)) {
-            return false;
-        }
+        for (let row = 0; row < currentShape.length; row++) {
+            for (let col = 0; col < currentShape[row].length; col++) {
+                if (currentShape[row][col]) {
+                    /**
+                     * Left wall
+                     */
+                    if (direction === LEFT && row + potentialPosition.row < 0) {
+                        return false;
+                    }
 
-        // Right wall
-        if (direction === RIGHT && this.collisionOnRight(tetromino)) {
-            return false;
-        }
+                    /**
+                     * Right wall
+                     */
+                    if (direction === RIGHT && row + potentialPosition.row >= width) {
+                        return false;
+                    }
 
-        // End of grid
-        if (direction === DOWN && this.collisionOnBottom(tetromino)) {
-            return false;
+                    /**
+                     * Bottom of the grid
+                     */
+                    if (direction === DOWN && col + potentialPosition.col >= height) {
+                        return false;
+                    }
+                }
+            }
         }
 
         return true;
-    }
-
-    collisionOnLeft(tetromino) {
-        const currentShape = tetromino.getCurrentShape();
-        const { row: positionRow, col: positionCol } = tetromino.getPotentialPosition();
-
-        for (let row = 0; row < currentShape.length; row++) {
-            for (let col = 0; col < currentShape[row].length; col++) {
-                if (currentShape[row][col]) {
-                    if (row + positionRow < 0) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    collisionOnRight(tetromino) {
-        const grid = this.getGrid();
-        const { width, height } = grid.getDimensions();
-        const currentShape = tetromino.getCurrentShape();
-        const { row: positionRow, col: positionCol } = tetromino.getPotentialPosition();
-
-        for (let row = 0; row < currentShape.length; row++) {
-            for (let col = 0; col < currentShape[row].length; col++) {
-                if (currentShape[row][col]) {
-                    if (row + positionRow >= width) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
-    }
-
-    collisionOnBottom(tetromino) {
-        const grid = this.getGrid();
-        const { width, height } = grid.getDimensions();
-        const currentShape = tetromino.getCurrentShape();
-        const { row: positionRow, col: positionCol } = tetromino.getPotentialPosition();
-
-        for (let row = 0; row < currentShape.length; row++) {
-            for (let col = 0; col < currentShape[row].length; col++) {
-                if (currentShape[row][col]) {
-                    if (col + positionCol >= height) {
-                        return true;
-                    }
-                }
-            }
-        }
-
-        return false;
     }
 
     addTetrominoToLanded(tetromino) {
