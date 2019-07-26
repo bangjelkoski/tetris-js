@@ -54,6 +54,47 @@ export class Grid {
         return this;
     }
 
+    addTetromino(tetromino) {
+        const currentShape = tetromino.getCurrentShape();
+        const grid = this.getGrid();
+        const { row: potentialRow, col: potentialCol } = tetromino.getPotentialPosition();
+
+        for (let row = 0; row < currentShape.length; row++) {
+            for (let col = 0; col < currentShape[row].length; col++) {
+                if (currentShape[row][col]) {
+                    grid[row + potentialRow][col + potentialCol] = 1;
+                }
+            }
+        }
+
+        // tetromino.move();
+
+        return this.setGrid(grid);
+    }
+
+    haveTetrominoLanded(tetromino) {
+        const currentShape = tetromino.getCurrentShape();
+        const grid = this.getGrid();
+        const { width, height } = this.getDimensions();
+        const { row: potentialRow, col: potentialCol } = tetromino.getPotentialPosition();
+
+        for (let row = 0; row < currentShape.length; row++) {
+            for (let col = 0; col < currentShape[row].length; col++) {
+                if (currentShape[row][col]) {
+                    if (grid[row + potentialRow][col + potentialCol] !== 0) {
+                        return true; // Space is already taken
+                    }
+
+                    if (col + potentialCol >= height - 1) {
+                        return true; // Bottom wall
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     fillGrid() {
         const grid = this.getGrid();
         const { width, height } = this.getDimensions();

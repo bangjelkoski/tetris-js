@@ -88,22 +88,24 @@ export class Tetris {
 
     rotateTetromino() {
         const tetromino = this.getCurrentTetromino();
+        const grid = this.getGrid();
 
-        if (tetromino.canBeRotated(this.getGrid())) {
+        if (tetromino.canBeRotated(grid)) {
             const { newShapeIndex, potentialPosition } = tetromino.getPotentialPositionAfterRotation();
 
-            if (!this.haveTetrominoLanded(potentialPosition)) {
-                tetromino.rotate(newShapeIndex);
-            } else {
-                return this.addTetrominoToGrid(tetromino, potentialPosition);
+            if (grid.haveTetrominoLanded(potentialPosition)) {
+                return grid.addTetromino(tetromino);
             }
+
+            return tetromino.rotate(newShapeIndex);
         }
     }
 
     moveTetromino(direction) {
         const tetromino = this.getCurrentTetromino();
         const { row, col } = tetromino.getPosition();
-        const gridDimensions = this.getGrid().getDimensions();
+        const grid = this.getGrid();
+        const gridDimensions = grid.getDimensions();
 
         let potentialPosition;
         switch (direction) {
@@ -120,11 +122,12 @@ export class Tetris {
 
         tetromino.setPotentialPosition(potentialPosition);
 
-        if (tetromino.canBeMoved(direction, gridDimensions)) {
-            if (this.haveTetrominoLanded(potentialPosition)) {
-                return this.addTetrominoToGrid(tetromino);
-            }
+        if (grid.haveTetrominoLanded(tetromino)) {
+            grid.addTetromino(tetromino).fillGrid();
+            return this.start();
+        }
 
+        if (tetromino.canBeMoved(direction, gridDimensions)) {
             return tetromino.move();
         }
     }
@@ -133,12 +136,6 @@ export class Tetris {
 
     addTetrominoToGrid(tetromino) {
         return this.start();
-    }
-
-    haveTetrominoLanded({ row: potentialRow, col: potentialCol }) {
-        const grid = this.getGrid();
-
-        return false;
     }
 
     isGameOver() {
