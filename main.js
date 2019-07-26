@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
     drawGrid(grid.getDimensions(), grid.getElement());
 
     tetris.start();
-    /* setInterval(() => {
+    setInterval(() => {
         tetris.progress();
-    }, 1000); */
+    }, 500);
 });

@@ -138,7 +138,7 @@ export class Tetromino {
                     /**
                      * Bottom of the grid
                      */
-                    if (direction === DOWN && col + potentialCol >= height - 1) {
+                    if (direction === DOWN && col + potentialCol >= height) {
                         return false;
                     }
                 }

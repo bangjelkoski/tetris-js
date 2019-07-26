@@ -57,7 +57,7 @@ export class Grid {
     addTetromino(tetromino) {
         const currentShape = tetromino.getCurrentShape();
         const grid = this.getGrid();
-        const { row: potentialRow, col: potentialCol } = tetromino.getPotentialPosition();
+        const { row: potentialRow, col: potentialCol } = tetromino.getPosition();
 
         for (let row = 0; row < currentShape.length; row++) {
             for (let col = 0; col < currentShape[row].length; col++) {
@@ -66,8 +66,6 @@ export class Grid {
                 }
             }
         }
-
-        // tetromino.move();
 
         return this.setGrid(grid);
     }
@@ -85,7 +83,7 @@ export class Grid {
                         return true; // Space is already taken
                     }
 
-                    if (col + potentialCol >= height - 1) {
+                    if (col + potentialCol >= height) {
                         return true; // Bottom wall
                     }
                 }
@@ -112,12 +110,10 @@ export class Grid {
 
     checkForCompletedLines() {
         const grid = [...this.getGrid()];
-        const { width } = this.getDimensions();
+        const { width, height } = this.getDimensions();
 
         for (let row = 0; row < width; row++) {
-            if (grid[row].every(element => element)) {
-                grid[row].map(element => !element);
-            }
+            for (let col = 0; col < height; col++) {}
         }
 
         this.setGrid(grid);

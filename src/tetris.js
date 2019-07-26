@@ -123,7 +123,9 @@ export class Tetris {
         tetromino.setPotentialPosition(potentialPosition);
 
         if (grid.haveTetrominoLanded(tetromino)) {
-            grid.addTetromino(tetromino).fillGrid();
+            grid.addTetromino(tetromino)
+                .checkForCompletedLines()
+                .fillGrid();
             return this.start();
         }
 
