@@ -1,14 +1,8 @@
 import { Grid } from './grid.js';
 import { Tetromino } from './tetromino.js';
-import { iterateCurrentShape } from './helpers.js';
 
-/**
- * Key codes
- */
-const DOWN = 40;
-const UP = 38;
-const RIGHT = 39;
-const LEFT = 37;
+import { KEY_CODES } from './helpers.js';
+const { UP, DOWN, LEFT, RIGHT } = KEY_CODES;
 
 export class Tetris {
     constructor() {
@@ -93,14 +87,25 @@ export class Tetris {
     }
 
     rotateTetromino() {
-        //
+        const tetromino = this.getCurrentTetromino();
+
+        if (tetromino.canBeRotated(this.getGrid())) {
+            const { newShapeIndex, potentialPosition } = tetromino.getPotentialPositionAfterRotation();
+
+            if (!this.haveTetrominoLanded(potentialPosition)) {
+                tetromino.rotate(newShapeIndex);
+            } else {
+                return this.addTetrominoToGrid(tetromino, potentialPosition);
+            }
+        }
     }
 
     moveTetromino(direction) {
         const tetromino = this.getCurrentTetromino();
         const { row, col } = tetromino.getPosition();
-        let potentialPosition;
+        const gridDimensions = this.getGrid().getDimensions();
 
+        let potentialPosition;
         switch (direction) {
             case DOWN:
                 potentialPosition = { row, col: col + 1 };
@@ -113,55 +118,26 @@ export class Tetris {
                 break;
         }
 
-        if (this.canTetrominoBeMoved(potentialPosition, direction)) {
-            if (!this.haveTetrominoLanded(potentialPosition)) {
-                tetromino.move(potentialPosition);
-            } else {
-                tetromino.setPosition(potentialPosition);
-                this.addTetrominoToLanded(tetromino);
+        tetromino.setPotentialPosition(potentialPosition);
+
+        if (tetromino.canBeMoved(direction, gridDimensions)) {
+            if (this.haveTetrominoLanded(potentialPosition)) {
+                return this.addTetrominoToGrid(tetromino);
             }
+
+            return tetromino.move();
         }
     }
 
-    canTetrominoBeMoved(potentialPosition, direction) {
-        const currentShape = this.getCurrentTetromino().getCurrentShape();
-        const { width, height } = this.getGrid().getDimensions();
+    canTetrominoBeRotated() {}
 
-        for (let row = 0; row < currentShape.length; row++) {
-            for (let col = 0; col < currentShape[row].length; col++) {
-                if (currentShape[row][col]) {
-                    /**
-                     * Left wall
-                     */
-                    if (direction === LEFT && row + potentialPosition.row < 0) {
-                        return false;
-                    }
-
-                    /**
-                     * Right wall
-                     */
-                    if (direction === RIGHT && row + potentialPosition.row >= width) {
-                        return false;
-                    }
-
-                    /**
-                     * Bottom of the grid
-                     */
-                    if (direction === DOWN && col + potentialPosition.col >= height) {
-                        return false;
-                    }
-                }
-            }
-        }
-
-        return true;
-    }
-
-    addTetrominoToLanded(tetromino) {
-        //
+    addTetrominoToGrid(tetromino) {
+        return this.start();
     }
 
     haveTetrominoLanded({ row: potentialRow, col: potentialCol }) {
+        const grid = this.getGrid();
+
         return false;
     }
 

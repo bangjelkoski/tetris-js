@@ -1,3 +1,13 @@
+/**
+ * Key codes
+ */
+const DOWN = 40;
+const UP = 38;
+const RIGHT = 39;
+const LEFT = 37;
+
+export const KEY_CODES = { LEFT, UP, RIGHT, DOWN };
+
 const applyBackgroundColor = (x, y) => {
     const element = document.getElementById(`square-${x}-${y}`);
 
