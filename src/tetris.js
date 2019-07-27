@@ -116,7 +116,7 @@ export class Tetris {
             const { newShapeIndex, potentialPosition } = tetromino.getPotentialPositionAfterRotation();
 
             if (grid.hasTetrominoLanded(potentialPosition)) {
-                return grid.addTetromino(tetromino);
+                return this.addTetrominoToGrid();
             }
 
             return tetromino.rotate(newShapeIndex);
