@@ -105,11 +105,7 @@ export class Tetris {
     }
 
     progress() {
-        if (this.isGameOver()) {
-            alert(`Game over! You have managed to get total of ${this.getPoints()} points`);
-        }
-
-        this.moveTetromino(DOWN);
+        return this.moveTetromino(DOWN);
     }
 
     rotateTetromino() {
@@ -119,7 +115,7 @@ export class Tetris {
         if (tetromino.canBeRotated(grid)) {
             const { newShapeIndex, potentialPosition } = tetromino.getPotentialPositionAfterRotation();
 
-            if (grid.haveTetrominoLanded(potentialPosition)) {
+            if (grid.hasTetrominoLanded(potentialPosition)) {
                 return grid.addTetromino(tetromino);
             }
 
@@ -148,7 +144,7 @@ export class Tetris {
 
         tetromino.setPotentialPosition(potentialPosition);
 
-        if (grid.haveTetrominoLanded(tetromino)) {
+        if (grid.hasTetrominoLanded(tetromino)) {
             return this.addTetrominoToGrid();
         }
 
@@ -174,6 +170,14 @@ export class Tetris {
     }
 
     isGameOver() {
+        const grid = this.getGrid();
+        const tetromino = this.getCurrentTetromino();
+        const { row, col } = tetromino.getPosition();
+
+        if (row === 0 && grid.hasTetrominoLanded(tetromino)) {
+            return true;
+        }
+
         return false;
     }
 }

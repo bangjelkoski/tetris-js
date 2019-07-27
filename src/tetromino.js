@@ -7,6 +7,7 @@ const { UP, DOWN, LEFT, RIGHT } = KEY_CODES;
 export class Tetromino {
     constructor(position) {
         this.setPosition(position)
+            .setPotentialPosition(position)
             .setShape(Math.floor(Math.random() * tetrominos.length))
             .setCurrentShapeIndex(Math.floor(Math.random() * this.getShape().length))
             .setCurrentShape();

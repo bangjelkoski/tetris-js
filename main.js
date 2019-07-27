@@ -8,7 +8,12 @@ document.addEventListener('DOMContentLoaded', function(event) {
     drawGrid(grid.getDimensions(), grid.getElement());
 
     tetris.start();
-    setInterval(() => {
-        tetris.progress();
+    const interval = setInterval(() => {
+        if (tetris.isGameOver()) {
+            alert(`Game over! You have managed to get total of ${tetris.getPoints()} points`);
+            clearInterval(interval);
+        } else {
+            tetris.progress();
+        }
     }, 500);
 });

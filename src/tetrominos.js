@@ -45,4 +45,4 @@ const Z = [
     [[0, 1, 0], [1, 1, 0], [1, 0, 0]],
 ];
 
-export const tetrominos = [I];
+export const tetrominos = [I, J, L, O, S, T, Z];

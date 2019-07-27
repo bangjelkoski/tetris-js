@@ -81,7 +81,7 @@ export class Grid {
         return this.setGrid(grid);
     }
 
-    haveTetrominoLanded(tetromino) {
+    hasTetrominoLanded(tetromino) {
         const currentShape = tetromino.getCurrentShape();
         const grid = this.getGrid();
         const { width, height } = this.getDimensions();
