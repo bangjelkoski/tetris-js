@@ -12,11 +12,16 @@ export class Grid {
     constructor() {
         this.setDimensions()
             .setElement()
-            .setGrid();
+            .setGrid()
+            .setTotalCompletedLines();
     }
 
     getDimensions() {
         return this.dimensions;
+    }
+
+    getTotalCompletedLines() {
+        return this.totalCompletedLines;
     }
 
     getElement() {
@@ -42,13 +47,19 @@ export class Grid {
         return this;
     }
 
+    setTotalCompletedLines(total = 0) {
+        this.totalCompletedLines = total;
+
+        return this;
+    }
+
     setGrid(grid = null) {
         const { width, height } = this.getDimensions();
 
         this.grid = grid
             ? [...grid]
-            : new Array(width).fill(0).map(column => {
-                  return new Array(height).fill(0);
+            : new Array(height).fill(0).map(column => {
+                  return new Array(width).fill(0);
               });
 
         return this;
@@ -79,11 +90,16 @@ export class Grid {
         for (let row = 0; row < currentShape.length; row++) {
             for (let col = 0; col < currentShape[row].length; col++) {
                 if (currentShape[row][col]) {
-                    if (grid[row + potentialRow][col + potentialCol] !== 0) {
+                    if (
+                        row + potentialRow < height &&
+                        col + potentialCol > 0 &&
+                        col + potentialCol < width &&
+                        grid[row + potentialRow][col + potentialCol] !== 0
+                    ) {
                         return true; // Space is already taken
                     }
 
-                    if (col + potentialCol >= height) {
+                    if (row + potentialRow >= height) {
                         return true; // Bottom wall
                     }
                 }
@@ -97,8 +113,8 @@ export class Grid {
         const grid = this.getGrid();
         const { width, height } = this.getDimensions();
 
-        for (let row = 0; row < width; row++) {
-            for (let col = 0; col < height; col++) {
+        for (let row = 0; row < height; row++) {
+            for (let col = 0; col < width; col++) {
                 if (grid[row][col]) {
                     applyBackgroundColor(row, col);
                 } else {
@@ -109,14 +125,19 @@ export class Grid {
     }
 
     checkForCompletedLines() {
-        const grid = [...this.getGrid()];
+        const grid = this.getGrid();
         const { width, height } = this.getDimensions();
+        let total = 0;
 
-        for (let row = 0; row < width; row++) {
-            for (let col = 0; col < height; col++) {}
+        for (let row = 0; row < height; row++) {
+            if (grid[row].every(element => element)) {
+                grid[row] = new Array(width).fill(0);
+                total += 1;
+            }
         }
 
         this.setGrid(grid);
+        this.setTotalCompletedLines(total);
 
         return this;
     }

@@ -48,7 +48,7 @@ const drawGrid = ({ width, height }, element) => {
         }
 
         for (let col = 0; col < width; col++) {
-            const square = getEmptySquare(col, row);
+            const square = getEmptySquare(row, col);
             rowElement.appendChild(square);
         }
 

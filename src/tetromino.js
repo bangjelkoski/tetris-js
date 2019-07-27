@@ -124,21 +124,21 @@ export class Tetromino {
                     /**
                      * Left wall
                      */
-                    if (direction === LEFT && row + potentialRow < 0) {
+                    if (direction === LEFT && col + potentialCol < 0) {
                         return false;
                     }
 
                     /**
                      * Right wall
                      */
-                    if (direction === RIGHT && row + potentialRow >= width) {
+                    if (direction === RIGHT && col + potentialCol >= width) {
                         return false;
                     }
 
                     /**
                      * Bottom of the grid
                      */
-                    if (direction === DOWN && col + potentialCol >= height) {
+                    if (direction === DOWN && row + potentialRow >= height) {
                         return false;
                     }
                 }

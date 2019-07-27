@@ -9,7 +9,9 @@ export class Tetris {
         this.setGrid()
             .setCurrentTetromino({})
             .setNextTetromino({})
-            .setPoints();
+            .setPoints()
+            .setLevelMultiplier()
+            .setLineCompletionPoints();
 
         document.addEventListener('keydown', e => {
             switch (e.keyCode) {
@@ -35,9 +37,9 @@ export class Tetris {
 
     getNewTetromino(row, col = 0) {
         const { width: gridWidth } = this.getGrid().getDimensions();
-        const positionRow = row || gridWidth / 2 - 2;
+        const positionCol = row || gridWidth / 2 - 2;
 
-        return new Tetromino({ row: positionRow, col });
+        return new Tetromino({ row: 0, col: positionCol });
     }
 
     getNextTetromino() {
@@ -48,8 +50,32 @@ export class Tetris {
         return this.currentTetromino;
     }
 
+    getLineCompletionPoints() {
+        return this.lineCompletionPoints;
+    }
+
+    getLevelMultiplier() {
+        return this.levelMultiplier;
+    }
+
+    getTotalNewPoints(completedLines) {
+        return this.getPoints() + this.getLevelMultiplier() * this.getLineCompletionPoints() * completedLines;
+    }
+
     setGrid() {
         this.grid = new Grid();
+
+        return this;
+    }
+
+    setLineCompletionPoints(points = 100) {
+        this.lineCompletionPoints = points;
+
+        return this;
+    }
+
+    setLevelMultiplier(multiplier = 1) {
+        this.levelMultiplier = multiplier;
 
         return this;
     }
@@ -110,23 +136,20 @@ export class Tetris {
         let potentialPosition;
         switch (direction) {
             case DOWN:
-                potentialPosition = { row, col: col + 1 };
-                break;
-            case RIGHT:
                 potentialPosition = { row: row + 1, col };
                 break;
+            case RIGHT:
+                potentialPosition = { row, col: col + 1 };
+                break;
             case LEFT:
-                potentialPosition = { row: row - 1, col };
+                potentialPosition = { row, col: col - 1 };
                 break;
         }
 
         tetromino.setPotentialPosition(potentialPosition);
 
         if (grid.haveTetrominoLanded(tetromino)) {
-            grid.addTetromino(tetromino)
-                .checkForCompletedLines()
-                .fillGrid();
-            return this.start();
+            return this.addTetrominoToGrid();
         }
 
         if (tetromino.canBeMoved(direction, gridDimensions)) {
@@ -136,8 +159,18 @@ export class Tetris {
 
     canTetrominoBeRotated() {}
 
-    addTetrominoToGrid(tetromino) {
-        return this.start();
+    addTetrominoToGrid() {
+        const grid = this.getGrid();
+        const tetromino = this.getCurrentTetromino();
+
+        grid.addTetromino(tetromino)
+            .checkForCompletedLines()
+            .fillGrid();
+
+        const completedLines = grid.getTotalCompletedLines();
+        const newPoints = this.getTotalNewPoints(completedLines);
+
+        return this.setPoints(newPoints).start();
     }
 
     isGameOver() {
