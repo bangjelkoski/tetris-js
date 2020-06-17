@@ -1,10 +1,10 @@
-import { Grid } from './../grid/grid.js';
-import { Tetromino } from './../tetromino/tetromino.js';
-import { KEY_CODES } from './../helpers/helpers.js';
+import { Grid } from '../grid/grid';
+import { Tetromino } from '../tetromino/tetromino';
+import { KEY_CODES } from '../helpers/helpers';
 
 const { UP, DOWN, LEFT, RIGHT } = KEY_CODES;
 
-export class Tetris {
+export default class Tetris {
   constructor() {
     this.setGrid()
       .setCurrentTetromino({})
@@ -23,6 +23,8 @@ export class Tetris {
           return this.moveTetromino(RIGHT);
         case DOWN:
           return this.moveTetromino(DOWN);
+        default:
+          break;
       }
     });
   }
@@ -35,7 +37,7 @@ export class Tetris {
     return this.points;
   }
 
-  getNewTetromino(row, col = 0) {
+  getNewTetromino(row) {
     const { width: gridWidth } = this.getGrid().getDimensions();
     const positionCol = row || gridWidth / 2 - 2;
 
@@ -113,7 +115,7 @@ export class Tetris {
     return this.moveTetromino(DOWN);
   }
 
-  rotateTetromino() {
+  rotateTetromino = () => {
     const tetromino = this.getCurrentTetromino();
     const grid = this.getGrid();
 
@@ -129,9 +131,9 @@ export class Tetris {
 
       return tetromino.rotate(newShapeIndex);
     }
-  }
+  };
 
-  moveTetromino(direction) {
+  moveTetromino = (direction) => {
     const tetromino = this.getCurrentTetromino();
     const { row, col } = tetromino.getPosition();
     const grid = this.getGrid();
@@ -148,6 +150,8 @@ export class Tetris {
       case LEFT:
         potentialPosition = { row, col: col - 1 };
         break;
+      default:
+        break;
     }
 
     tetromino.setPotentialPosition(potentialPosition);
@@ -159,9 +163,7 @@ export class Tetris {
     if (tetromino.canBeMoved(direction, gridDimensions)) {
       return tetromino.move();
     }
-  }
-
-  canTetrominoBeRotated() {}
+  };
 
   addTetrominoToGrid() {
     const grid = this.getGrid();
@@ -178,7 +180,7 @@ export class Tetris {
   isGameOver() {
     const grid = this.getGrid();
     const tetromino = this.getCurrentTetromino();
-    const { row, col } = tetromino.getPosition();
+    const { row } = tetromino.getPosition();
 
     if (row === 0 && grid.hasTetrominoLanded(tetromino)) {
       return true;

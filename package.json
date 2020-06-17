@@ -12,6 +12,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.4",
+    "@babel/plugin-transform-modules-commonjs": "^7.10.1",
     "@babel/preset-env": "^7.8.4",
     "@types/jest": "^26.0.0",
     "@types/node": "^14.0.13",
@@ -20,6 +21,7 @@
     "babel-plugin-add-module-exports": "^1.0.2",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.11.0",
     "eslint-loader": "^3.0.3",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
@@ -27,8 +29,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^26.0.1",
     "ts-jest": "^26.1.0",
-    "typescript": "^3.9.5",
-    "tslint": "^6.1.2"
+    "tslint": "^6.1.2",
+    "typescript": "^3.9.5"
   },
   "dependencies": {}
 }

@@ -1,3 +1,5 @@
+import Tetris from './tetris';
+
 describe('Patterns implementations for the Tetris Class', () => {
   describe('Refactoring to a Singleton', () => {
     test('tetris class exists', () => {
