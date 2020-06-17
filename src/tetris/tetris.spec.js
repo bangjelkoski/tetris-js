@@ -12,5 +12,26 @@ describe('Patterns implementations for the Tetris Class', () => {
       expect(tetris).toBeDefined();
       expect(tetris).toBeInstanceOf(Tetris);
     });
+
+    test('tetris class should have a getInstance method', () => {
+      const isSingleton = (object) => {
+        return 'getInstance' in object;
+      };
+
+      const object = {
+        getInstance() {},
+      };
+
+      expect(isSingleton(object)).toBe(true);
+    });
+
+    test('tetris class should always return the same instance, even if invoked multiple times', () => {
+      const singleton1 = new Tetris();
+      const singleton2 = new Tetris();
+
+      expect(singleton1).toBeInstanceOf(Tetris);
+      expect(singleton2).toBeInstanceOf(Tetris);
+      expect(singleton1).toEqual(singleton2);
+    });
   });
 });
