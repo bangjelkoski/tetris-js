@@ -1,14 +1,14 @@
-import { tetrominos } from './tetrominos.js';
+import { tetrominos } from './tetrominos';
 import {
   removeBackgroundColor,
   applyBackgroundColor,
   iterateCurrentShape,
   KEY_CODES,
-} from './../helpers/helpers.js';
+} from '../helpers/helpers';
 
-const { UP, DOWN, LEFT, RIGHT } = KEY_CODES;
+const { DOWN, LEFT, RIGHT } = KEY_CODES;
 
-export class Tetromino {
+export default class Tetromino {
   constructor(position) {
     this.setPosition(position)
       .setPotentialPosition(position)
@@ -61,10 +61,6 @@ export class Tetromino {
     return this;
   }
 
-  recalculatePosition() {
-    //
-  }
-
   setCurrentShapeIndex(index) {
     this.currentShapeIndex = index;
 
@@ -93,10 +89,6 @@ export class Tetromino {
     this.clear().setPosition(this.getPotentialPosition()).draw();
   }
 
-  potentiallyRotate() {
-    //
-  }
-
   rotate(newShapeIndex) {
     if (this.getShape().length > 1) {
       this.setCurrentShapeIndex(newShapeIndex)
@@ -107,16 +99,18 @@ export class Tetromino {
     }
   }
 
-  canBeRotated(grid) {
+  canBeRotated = () => {
+    /*
     const currentShapeIndex = this.getCurrentShapeIndex();
     const shape = this.getShape();
 
     const incrementedIndex = currentShapeIndex + 1;
     const potentialShapeIndex =
       incrementedIndex < shape.length ? incrementedIndex : 0;
+      */
 
     return true;
-  }
+  };
 
   canBeMoved(direction, { width, height }) {
     const currentShape = this.getCurrentShape();
@@ -125,8 +119,8 @@ export class Tetromino {
       col: potentialCol,
     } = this.getPotentialPosition();
 
-    for (let row = 0; row < currentShape.length; row++) {
-      for (let col = 0; col < currentShape[row].length; col++) {
+    for (let row = 0; row < currentShape.length; row += 1) {
+      for (let col = 0; col < currentShape[row].length; col += 1) {
         if (currentShape[row][col]) {
           /**
            * Left wall
