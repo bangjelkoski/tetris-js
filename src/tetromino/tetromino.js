@@ -17,6 +17,10 @@ export default class Tetromino {
       .setCurrentShape();
   }
 
+  clone() {
+    return new Tetromino(this.getPosition());
+  }
+
   getPosition() {
     return this.position;
   }
