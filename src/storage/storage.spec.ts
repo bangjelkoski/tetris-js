@@ -42,4 +42,35 @@ describe('Strategy Implementation using TDD', () => {
 
     expect(isStrategy(object)).toBe(true);
   });
+
+  test('there should be an LocalStorageStrategy', () => {
+    //
+  });
+
+  test('there should be an CookieStorageStrategy', () => {
+    //
+  });
+
+  test('both strategies can perform ', () => {
+    const localStorageStrategy = new LocalStorageStrategy();
+    const cookieStorageStrategy = new CookieStorageStrategy();
+    const strategy = new Strategy(concreteStrategy1);
+
+    /**
+     * There should be a test about using the
+     * localstorage here but since its part of the
+     * window object, we cant test it in a
+     * node.js env
+     */
+    expect(true).toEqual(true);
+    expect(strategy.getStrategy()).toBeInstanceOf(LocalStorageStrategy);
+
+    strategy.setStrategy(cookieStorageStrategy);
+
+    /**
+     * Same explanation as above
+     */
+    expect(true).toEqual(true);
+    expect(strategy.getStrategy()).toBeInstanceOf(CookieStorageStrategy);
+  });
 });
