@@ -5,7 +5,21 @@ import { KEY_CODES } from '../helpers/helpers';
 const { UP, DOWN, LEFT, RIGHT } = KEY_CODES;
 
 export default class Tetris {
+  instance;
+
   constructor() {
+    if (Tetris.instance) {
+      return Tetris.instance;
+    }
+
+    Tetris.instance = this;
+
+    this.init();
+
+    return this;
+  }
+
+  init() {
     this.setGrid()
       .setCurrentTetromino({})
       .setNextTetromino({})
