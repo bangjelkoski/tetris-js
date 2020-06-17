@@ -1,5 +1,5 @@
 import { Grid } from '../grid/grid';
-import { Tetromino } from '../tetromino/tetromino';
+import Tetromino from '../tetromino/tetromino';
 import { KEY_CODES } from '../helpers/helpers';
 
 const { UP, DOWN, LEFT, RIGHT } = KEY_CODES;
