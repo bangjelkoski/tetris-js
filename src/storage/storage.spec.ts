@@ -1,3 +1,5 @@
+import { Storage } from './storage';
+
 describe('Strategy Implementation using TDD', () => {
   test('there should be an Storage class', () => {
     //
