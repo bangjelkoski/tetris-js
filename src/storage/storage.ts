@@ -8,14 +8,18 @@
  * using the Strategy pattern
  */
 export class Storage {
-  private strategy;
+  private strategy: Strategy;
 
-  constructor(strategy) {
+  constructor(strategy: Strategy) {
     this.strategy = strategy;
   }
 
-  public setStrategy(strategy) {
+  public setStrategy(strategy: Strategy) {
     this.strategy = strategy;
+  }
+
+  public getStrategy(): Strategy {
+    return this.strategy;
   }
 
   public get(key: string): any {

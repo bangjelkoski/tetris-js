@@ -32,5 +32,8 @@
     "tslint": "^6.1.2",
     "typescript": "^3.9.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "js-cookie": "^2.2.1",
+    "store2": "^2.11.2"
+  }
 }

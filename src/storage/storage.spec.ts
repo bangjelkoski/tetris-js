@@ -1,4 +1,6 @@
 import { Storage, Strategy } from './storage';
+import { CookieStorageStrategy } from './strategies/cookie';
+import { LocalStorageStrategy } from './strategies/local';
 
 describe('Strategy Implementation using TDD', () => {
   test('there should be an Storage class', () => {
@@ -54,7 +56,7 @@ describe('Strategy Implementation using TDD', () => {
   test('both strategies can perform ', () => {
     const localStorageStrategy = new LocalStorageStrategy();
     const cookieStorageStrategy = new CookieStorageStrategy();
-    const strategy = new Strategy(concreteStrategy1);
+    const strategy = new Storage(localStorageStrategy);
 
     /**
      * There should be a test about using the
