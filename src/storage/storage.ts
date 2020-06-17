@@ -30,3 +30,9 @@ export class Storage {
     return this.strategy.remove(key);
   }
 }
+
+export interface Strategy {
+  get(key: string): any;
+  set(key: string, value: any): any;
+  remove(key: string): any;
+}
