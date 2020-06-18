@@ -1,4 +1,5 @@
 import { TetrimonoContract } from './index';
+import Tetrimono from './tetromino';
 
 describe('Strategy Implementation using TDD', () => {
   test('there should be a TetrimonoContract interface', () => {

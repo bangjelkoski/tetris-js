@@ -1,3 +1,4 @@
+import { TetrimonoContract } from './index';
 import { tetrominos } from './tetrominos';
 import {
   removeBackgroundColor,
@@ -8,7 +9,7 @@ import {
 
 const { DOWN, LEFT, RIGHT } = KEY_CODES;
 
-export default class Tetromino {
+export default class Tetromino implements TetrimonoContract {
   position;
   potentialPosition;
   currentShape;
@@ -21,6 +22,10 @@ export default class Tetromino {
       .setShape(Math.floor(Math.random() * tetrominos.length))
       .setCurrentShapeIndex(Math.floor(Math.random() * this.getShape().length))
       .setCurrentShape();
+  }
+
+  getPoints(): number {
+    return 4;
   }
 
   clone() {
