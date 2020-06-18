@@ -9,6 +9,12 @@ import {
 const { DOWN, LEFT, RIGHT } = KEY_CODES;
 
 export default class Tetromino {
+  position;
+  potentialPosition;
+  currentShape;
+  currentShapeIndex;
+  shape;
+
   constructor(position) {
     this.setPosition(position)
       .setPotentialPosition(position)
@@ -95,11 +101,7 @@ export default class Tetromino {
 
   rotate(newShapeIndex) {
     if (this.getShape().length > 1) {
-      this.setCurrentShapeIndex(newShapeIndex)
-        .clear()
-        .setCurrentShape()
-        .recalculatePosition()
-        .draw();
+      this.setCurrentShapeIndex(newShapeIndex).clear().setCurrentShape().draw();
     }
   }
 
