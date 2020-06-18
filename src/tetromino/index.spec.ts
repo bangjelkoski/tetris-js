@@ -1,11 +1,11 @@
-import { Tetrimono } from './index';
+import { TetrimonoContract } from './index';
 
 describe('Strategy Implementation using TDD', () => {
-  test('there should be a Tetrimono interface', () => {
+  test('there should be a TetrimonoContract interface', () => {
     //
   });
-  test('the Tetrimono interface should include a method', () => {
-    const isTetrimono = (object: any): object is Tetrimono => {
+  test('the TetrimonoContract interface should include a method', () => {
+    const isTetrimonoContract = (object: any): object is TetrimonoContract => {
       return 'getPoints' in object;
     };
 
@@ -13,6 +13,6 @@ describe('Strategy Implementation using TDD', () => {
       getPoints(): any {},
     };
 
-    expect(isTetrimono(object)).toBe(true);
+    expect(isTetrimonoContract(object)).toBe(true);
   });
 });

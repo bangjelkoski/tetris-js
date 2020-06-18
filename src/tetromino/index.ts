@@ -1,3 +1,3 @@
-export interface Tetrimono {
+export interface TetrimonoContract {
   getPoints(): number;
 }
