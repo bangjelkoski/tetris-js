@@ -54,4 +54,16 @@ describe('Strategy Implementation using TDD', () => {
 
     expect(isSuperTetrimono(object)).toBe(true);
   });
+  test('it returns 4 when we call getPoints on the Tetromino and 8 when we call getPoints on the decorated tetromino i.e SuperTetromino', () => {
+    const tetrimono = new Tetrimono({ row: 0, col: 0 });
+    const superTetrimono = new SuperTetrimono(tetrimono);
+
+    const resultFromTetromino = tetrimono.getPoints();
+    const resultFromSuperTetromino = superTetrimono.getPoints();
+
+    expect(resultFromTetromino).toBeDefined();
+    expect(resultFromTetromino).toEqual(4);
+    expect(resultFromSuperTetromino).toBeDefined();
+    expect(resultFromSuperTetromino).toEqual(8);
+  });
 });
