@@ -28,4 +28,30 @@ describe('Strategy Implementation using TDD', () => {
 
     expect(isTetrimono(tetrimono)).toBe(true);
   });
+  test('there should be a TetrimonoDecorator class', () => {
+    //
+  });
+  test("the TetrimonoDecorator should have a method getPoints, and that method delegates the call to the component property's getPoints method", () => {
+    const tetrimono = new Tetrimono({ row: 0, col: 0 });
+    const decorator = new TetrimonoDecorator(tetrimono);
+
+    const result = decorator.getPoints();
+
+    expect(result).toBeDefined();
+    expect(result).toEqual(4);
+  });
+  test('there should be a SuperTetrimono Decorator class', () => {
+    //
+  });
+  test('the SuperTetrimono Decorator class should include a getPoints method', () => {
+    const isSuperTetrimono = (object: any): object is SuperTetrimono => {
+      return 'getPoints' in object;
+    };
+
+    const object = {
+      getPoints(): any {},
+    };
+
+    expect(isSuperTetrimono(object)).toBe(true);
+  });
 });
