@@ -1,4 +1,4 @@
-import { TetrimonoContract } from './index';
+import { TetrimonoContract, TetrimonoDecorator, SuperTetrimono } from './index';
 import Tetrimono from './tetromino';
 
 describe('Strategy Implementation using TDD', () => {
